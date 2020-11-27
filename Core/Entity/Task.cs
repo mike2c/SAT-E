@@ -9,6 +9,8 @@ namespace Core.Entity
         public DateTime TaskDate { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        public float EstimatedTime { get; set; }
+        public float ActualTime { get; set; }
         public Source Source { get; set; }
         public User AttendedBy { get; set; }
         public User AssignedBy { get; set; }

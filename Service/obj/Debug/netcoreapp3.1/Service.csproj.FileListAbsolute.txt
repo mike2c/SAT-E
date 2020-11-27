@@ -7,3 +7,8 @@ C:\Users\mcastilloc\source\repos\SAT-E\Service\obj\Debug\netcoreapp3.1\Service.A
 C:\Users\mcastilloc\source\repos\SAT-E\Service\obj\Debug\netcoreapp3.1\Service.csproj.CoreCompileInputs.cache
 C:\Users\mcastilloc\source\repos\SAT-E\Service\obj\Debug\netcoreapp3.1\Service.dll
 C:\Users\mcastilloc\source\repos\SAT-E\Service\obj\Debug\netcoreapp3.1\Service.pdb
+C:\Users\mcastilloc\source\repos\SAT-E\Service\bin\Debug\netcoreapp3.1\Core.dll
+C:\Users\mcastilloc\source\repos\SAT-E\Service\bin\Debug\netcoreapp3.1\Data.dll
+C:\Users\mcastilloc\source\repos\SAT-E\Service\bin\Debug\netcoreapp3.1\Core.pdb
+C:\Users\mcastilloc\source\repos\SAT-E\Service\bin\Debug\netcoreapp3.1\Data.pdb
+C:\Users\mcastilloc\source\repos\SAT-E\Service\obj\Debug\netcoreapp3.1\Service.csproj.CopyComplete

@@ -1,22 +1,47 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    Layout = null;
 }
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-
-</div>
-
-<form>
-    <div class="form-group">
-        <label for="username">Usuario</label>
-        <input type="text" class="form-control" id="username" aria-describedby="emailHelp" placeholder="nombre de usuario">
-        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+<!DOCTYPE html>
+<html class="h-100" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Application</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body class="h-100">
+    <div class="container h-100">
+        <div class="row h-100 justify-content-center">
+            <div class="col-md-4 col-sm-8 col-lg-4 d-flex align-items-center justify-content-center h-100">
+                <form method="post" action="Login/Login" class="w-100">
+                    <div class="text-center">
+                        <h1 class="display-4">SAT-E</h1>
+                        <p>Sitema de atencion y soporte a usuarios</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="username">Usuario</label>
+                        <input type="text" class="form-control" name="username" id="username" aria-describedby="emailHelp" placeholder="nombre de usuario">
+                        @*<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>*@
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Contraseña</label>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="contraseña">
+                    </div>
+                    <p class="text-center">Olvide mi contraseña <a href="https://docs.microsoft.com/aspnet/core">¿Como recuperarla?</a></p>
+                    <button type="submit" class="btn btn-primary btn-block">INGRESAR</button>
+                </form>
+            </div>
+        </div>        
     </div>
-    <div class="form-group">
-        <label for="password">Contraseña</label>
-        <input type="password" class="form-control" id="password" placeholder="contraseña">
-    </div>
-    <button type="submit" class="btn btn-primary">INGRESAR</button>
-</form>
+
+    @*<footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2020 - Application - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>*@
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+</html>

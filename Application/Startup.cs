@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Service.Auth;
 
 namespace Application
 {
@@ -24,8 +25,17 @@ namespace Application
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
-            services.AddDbContextFactory<SATContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SATDatabase")));
+            services
+                .AddControllersWithViews()
+                .AddRazorRuntimeCompilation();
+
+            services
+                .AddDbContextFactory<SATContext>(options => 
+                    options.UseSqlServer(Configuration.GetConnectionString("SATDatabase"))
+                );
+            
+            services.AddTransient<SATContext>();
+            services.AddTransient<AuthService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
