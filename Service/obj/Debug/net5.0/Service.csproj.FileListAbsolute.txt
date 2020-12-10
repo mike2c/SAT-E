@@ -1,0 +1,17 @@
+C:\Users\mcastilloc\source\repos\SAT-E\Service\bin\Debug\net5.0\Service.deps.json
+C:\Users\mcastilloc\source\repos\SAT-E\Service\bin\Debug\net5.0\Service.dll
+C:\Users\mcastilloc\source\repos\SAT-E\Service\bin\Debug\net5.0\ref\Service.dll
+C:\Users\mcastilloc\source\repos\SAT-E\Service\bin\Debug\net5.0\Service.pdb
+C:\Users\mcastilloc\source\repos\SAT-E\Service\bin\Debug\net5.0\Core.dll
+C:\Users\mcastilloc\source\repos\SAT-E\Service\bin\Debug\net5.0\Data.dll
+C:\Users\mcastilloc\source\repos\SAT-E\Service\bin\Debug\net5.0\Core.pdb
+C:\Users\mcastilloc\source\repos\SAT-E\Service\bin\Debug\net5.0\Data.pdb
+C:\Users\mcastilloc\source\repos\SAT-E\Service\obj\Debug\net5.0\Service.csprojAssemblyReference.cache
+C:\Users\mcastilloc\source\repos\SAT-E\Service\obj\Debug\net5.0\Service.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\mcastilloc\source\repos\SAT-E\Service\obj\Debug\net5.0\Service.AssemblyInfoInputs.cache
+C:\Users\mcastilloc\source\repos\SAT-E\Service\obj\Debug\net5.0\Service.AssemblyInfo.cs
+C:\Users\mcastilloc\source\repos\SAT-E\Service\obj\Debug\net5.0\Service.csproj.CoreCompileInputs.cache
+C:\Users\mcastilloc\source\repos\SAT-E\Service\obj\Debug\net5.0\Service.csproj.CopyComplete
+C:\Users\mcastilloc\source\repos\SAT-E\Service\obj\Debug\net5.0\Service.dll
+C:\Users\mcastilloc\source\repos\SAT-E\Service\obj\Debug\net5.0\ref\Service.dll
+C:\Users\mcastilloc\source\repos\SAT-E\Service\obj\Debug\net5.0\Service.pdb

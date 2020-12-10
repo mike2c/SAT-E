@@ -126,6 +126,19 @@ namespace Data.Migrations
                     b.ToTable("Employee");
                 });
 
+            modelBuilder.Entity("Core.Entity.Rol", b =>
+                {
+                    b.Property<int>("RolId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("RolName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("RolId");
+
+                    b.ToTable("Rol");
+                });
+
             modelBuilder.Entity("Core.Entity.Solution", b =>
                 {
                     b.Property<int>("SolutionId")
@@ -134,8 +147,8 @@ namespace Data.Migrations
                         .UseIdentityColumn();
 
                     b.Property<string>("SolutionName")
-                        .HasMaxLength(50)
-                        .HasColumnType("Varchar(50)");
+                        .HasMaxLength(45)
+                        .HasColumnType("Varchar(45)");
 
                     b.HasKey("SolutionId");
 
@@ -200,6 +213,9 @@ namespace Data.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
+                    b.Property<float>("ActualTime")
+                        .HasColumnType("real");
+
                     b.Property<int?>("AssignedByUserId")
                         .HasColumnType("int");
 
@@ -215,8 +231,8 @@ namespace Data.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("IncidenceType")
-                        .HasColumnType("int");
+                    b.Property<float>("EstimatedTime")
+                        .HasColumnType("real");
 
                     b.Property<int>("Priority")
                         .HasColumnType("int");
@@ -238,6 +254,9 @@ namespace Data.Migrations
 
                     b.Property<DateTime>("TaskDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("TaskType")
+                        .HasColumnType("int");
 
                     b.HasKey("TaskId");
 
@@ -263,8 +282,8 @@ namespace Data.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("VarChar(20)");
+                        .HasMaxLength(45)
+                        .HasColumnType("VarChar(45)");
 
                     b.Property<bool>("IsActive")
                         .ValueGeneratedOnAdd()
@@ -286,19 +305,34 @@ namespace Data.Migrations
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("Core.Entity.TechnicalSupport", b =>
+            modelBuilder.Entity("RolUser", b =>
+                {
+                    b.Property<int>("RolesRolId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UsersUserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("RolesRolId", "UsersUserId");
+
+                    b.HasIndex("UsersUserId");
+
+                    b.ToTable("UserRoles");
+                });
+
+            modelBuilder.Entity("Core.Entity.TechnicalAssistance", b =>
                 {
                     b.HasBaseType("Core.Entity.Task");
 
                     b.Property<int?>("SolutionId")
                         .HasColumnType("int");
 
-                    b.Property<int>("TechnicalSupportId")
+                    b.Property<int>("TechnicalAssistanceId")
                         .HasColumnType("int");
 
                     b.HasIndex("SolutionId");
 
-                    b.ToTable("TechnicalSupport");
+                    b.ToTable("TechnicalAssistance");
                 });
 
             modelBuilder.Entity("AttachmentSolutionHistory", b =>
@@ -382,7 +416,22 @@ namespace Data.Migrations
                     b.Navigation("Source");
                 });
 
-            modelBuilder.Entity("Core.Entity.TechnicalSupport", b =>
+            modelBuilder.Entity("RolUser", b =>
+                {
+                    b.HasOne("Core.Entity.Rol", null)
+                        .WithMany()
+                        .HasForeignKey("RolesRolId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Core.Entity.User", null)
+                        .WithMany()
+                        .HasForeignKey("UsersUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Core.Entity.TechnicalAssistance", b =>
                 {
                     b.HasOne("Core.Entity.Solution", "Solution")
                         .WithMany()
@@ -390,7 +439,7 @@ namespace Data.Migrations
 
                     b.HasOne("Core.Entity.Task", null)
                         .WithOne()
-                        .HasForeignKey("Core.Entity.TechnicalSupport", "TaskId")
+                        .HasForeignKey("Core.Entity.TechnicalAssistance", "TaskId")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 

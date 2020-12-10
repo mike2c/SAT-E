@@ -2,7 +2,7 @@
 {
     public enum TaskType
     {
-        SoporteTecnico,
+        AsistenciaTecnica,
         Requerimiento,
         Ticket
     }

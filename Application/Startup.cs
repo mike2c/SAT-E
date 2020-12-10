@@ -5,11 +5,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Data.Data;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Service.Auth;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
+using Application.Security;
+using Microsoft.AspNetCore.Authorization;
+using Core.Security;
 
 namespace Application
 {
@@ -29,13 +30,27 @@ namespace Application
                 .AddControllersWithViews()
                 .AddRazorRuntimeCompilation();
 
-            services
-                .AddDbContextFactory<SATContext>(options => 
+            services.AddDbContextFactory<SATContext>(options => 
                     options.UseSqlServer(Configuration.GetConnectionString("SATDatabase"))
                 );
-            
-            services.AddTransient<SATContext>();
-            services.AddTransient<AuthService>();
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.LoginPath = "/Login/Login";
+                    options.Cookie.Name = "SAT.UserData.Cookie";
+                });
+
+            services.AddAuthorization(options =>
+                {
+                    //options.FallbackPolicy = new AuthorizationPolicyBuilder()
+                    //.RequireAuthenticatedUser()
+                    //.Build();
+                });
+
+            //services.AddTransient<AuthService>();
+            services.AddTransient <IEncryptor, Sha256Encrypt>();
+            services.AddTransient <SATContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,10 +64,18 @@ namespace Application
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-            app.UseStaticFiles();
 
+            app.UseStaticFiles();
             app.UseRouting();
 
+            CookiePolicyOptions cookiePolicyOptions = new CookiePolicyOptions()
+            {
+                MinimumSameSitePolicy = SameSiteMode.Strict
+            };
+
+            app.UseCookiePolicy(cookiePolicyOptions);
+
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

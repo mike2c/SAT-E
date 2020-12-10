@@ -13,9 +13,15 @@ namespace Data.Configuration
         {
             builder.ToTable("Solution");
 
-            builder.Property(s => s.SolutionName)
+            builder.Property(s => s.SolutionDescription)
+                .HasColumnType("Text")
+                .HasMaxLength(45);
+
+            builder.Property(s => s.ProblemDescription)
                 .HasColumnType("Varchar")
-                .HasMaxLength(50);
+                .HasMaxLength(45);
+
+            builder.HasOne(s => s.CurrentSolution);
 
         }
     }

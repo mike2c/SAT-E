@@ -23,11 +23,18 @@ namespace Data.Configuration
 
             builder.Property(u => u.Email)
                 .IsRequired(true)
-                .HasMaxLength(20)
+                .HasMaxLength(45)
                 .HasColumnType("VarChar");
 
             builder.Property(u => u.IsActive)
                 .HasDefaultValue(true);
+
+            builder.HasMany(u => u.Roles)
+                .WithMany(r => r.Users)
+                .UsingEntity(ur =>
+                {
+                    ur.ToTable("UserRoles");
+                });
         }
     }
 }

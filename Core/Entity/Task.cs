@@ -18,6 +18,6 @@ namespace Core.Entity
         public Employee Employee { get; set; }
         public State State { get; set; }
         public Priority Priority { get; set; }
-        public TaskType IncidenceType { get; set; }
+        public TaskType TaskType { get; set; }
     }
 }

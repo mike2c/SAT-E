@@ -1,5 +1,9 @@
+using Application.Data;
+using Core.Security;
+using Data.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
@@ -13,7 +17,19 @@ namespace Application
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            var host = CreateHostBuilder(args).Build();
+
+            using (var scope = host.Services.CreateScope())
+            {
+                IServiceProvider services = scope.ServiceProvider;
+                SATContext context = services.GetRequiredService<SATContext>();
+                IEncryptor encryptor = services.GetRequiredService<IEncryptor>();
+
+                DummyData dummyData = new DummyData();
+                dummyData.Initialize(context, encryptor);
+            }
+
+            host.Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
