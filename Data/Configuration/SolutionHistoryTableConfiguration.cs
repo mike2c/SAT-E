@@ -18,7 +18,7 @@ namespace Data.Configuration
                 .WithMany(a => a.SolutionHistories)
                 .UsingEntity(sh => sh.ToTable("SolutionHistoryAttachments"));
 
-            builder.Property(s => s.CreatedDate)
+            builder.Property(s => s.LastModifiedDate)
                 .IsRequired(true);
 
             builder.Property(s => s.SolutionDescription)

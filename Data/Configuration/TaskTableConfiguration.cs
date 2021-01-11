@@ -12,15 +12,8 @@ namespace Data.Configuration
 
             builder.ToTable("Task");
 
-            builder.HasKey(i => i.TaskId);
-            builder.HasOne(i => i.AssingedTo);
-            builder.HasOne(i => i.AttendedBy);
-            builder.HasOne(i => i.AssignedBy);
-            builder.HasOne(i => i.Source);
-
-            builder.Property(t => t.Problem)
-                .IsRequired(true)
-                .HasColumnType("text");
+            builder.Property(t => t.TaskName)
+                .IsRequired(true);
 
             builder.Property(t => t.State)
                 .IsRequired(true)
@@ -29,7 +22,20 @@ namespace Data.Configuration
             builder.Property(t => t.Priority)
                 .IsRequired(true);
 
+            builder.Property(t => t.StartDate)
+                .IsRequired(false);
 
+            builder.Property(t => t.EndDate)
+                .IsRequired(false);
+
+            builder.HasKey(i => i.TaskId);
+            builder.HasOne(i => i.AssignedTo);
+            builder.HasOne(i => i.AttendedBy);
+            builder.HasOne(i => i.AssignedBy);
+            builder.HasOne(i => i.Source);
+
+            builder.HasOne(t => t.Employee)
+                .WithMany(e => e.Tasks);
         }
     }
 }

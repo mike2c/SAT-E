@@ -1,29 +1,28 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\mcastilloc\\source\\repos\\SAT-E\\Service\\Service.csproj": {}
+    "C:\\Users\\mike2c\\Source\\Repos\\SAT-E\\Service\\Service.csproj": {}
   },
   "projects": {
-    "C:\\Users\\mcastilloc\\source\\repos\\SAT-E\\Core\\Core.csproj": {
+    "C:\\Users\\mike2c\\Source\\Repos\\SAT-E\\Core\\Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\mcastilloc\\source\\repos\\SAT-E\\Core\\Core.csproj",
+        "projectUniqueName": "C:\\Users\\mike2c\\Source\\Repos\\SAT-E\\Core\\Core.csproj",
         "projectName": "Core",
-        "projectPath": "C:\\Users\\mcastilloc\\source\\repos\\SAT-E\\Core\\Core.csproj",
-        "packagesPath": "C:\\Users\\mcastilloc\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\mcastilloc\\source\\repos\\SAT-E\\Core\\obj\\",
+        "projectPath": "C:\\Users\\mike2c\\Source\\Repos\\SAT-E\\Core\\Core.csproj",
+        "packagesPath": "C:\\Users\\mike2c\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\mike2c\\Source\\Repos\\SAT-E\\Core\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\mcastilloc\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\mike2c\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 19.1.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\DevExpress 19.1\\Components\\System\\Components\\Packages": {},
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
@@ -61,26 +60,25 @@
         }
       }
     },
-    "C:\\Users\\mcastilloc\\source\\repos\\SAT-E\\Data\\Data.csproj": {
+    "C:\\Users\\mike2c\\Source\\Repos\\SAT-E\\Data\\Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\mcastilloc\\source\\repos\\SAT-E\\Data\\Data.csproj",
+        "projectUniqueName": "C:\\Users\\mike2c\\Source\\Repos\\SAT-E\\Data\\Data.csproj",
         "projectName": "Data",
-        "projectPath": "C:\\Users\\mcastilloc\\source\\repos\\SAT-E\\Data\\Data.csproj",
-        "packagesPath": "C:\\Users\\mcastilloc\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\mcastilloc\\source\\repos\\SAT-E\\Data\\obj\\",
+        "projectPath": "C:\\Users\\mike2c\\Source\\Repos\\SAT-E\\Data\\Data.csproj",
+        "packagesPath": "C:\\Users\\mike2c\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\mike2c\\Source\\Repos\\SAT-E\\Data\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\mcastilloc\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\mike2c\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 19.1.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\DevExpress 19.1\\Components\\System\\Components\\Packages": {},
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
@@ -88,8 +86,8 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\mcastilloc\\source\\repos\\SAT-E\\Core\\Core.csproj": {
-                "projectPath": "C:\\Users\\mcastilloc\\source\\repos\\SAT-E\\Core\\Core.csproj"
+              "C:\\Users\\mike2c\\Source\\Repos\\SAT-E\\Core\\Core.csproj": {
+                "projectPath": "C:\\Users\\mike2c\\Source\\Repos\\SAT-E\\Core\\Core.csproj"
               }
             }
           }
@@ -138,26 +136,25 @@
         }
       }
     },
-    "C:\\Users\\mcastilloc\\source\\repos\\SAT-E\\Service\\Service.csproj": {
+    "C:\\Users\\mike2c\\Source\\Repos\\SAT-E\\Service\\Service.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\mcastilloc\\source\\repos\\SAT-E\\Service\\Service.csproj",
+        "projectUniqueName": "C:\\Users\\mike2c\\Source\\Repos\\SAT-E\\Service\\Service.csproj",
         "projectName": "Service",
-        "projectPath": "C:\\Users\\mcastilloc\\source\\repos\\SAT-E\\Service\\Service.csproj",
-        "packagesPath": "C:\\Users\\mcastilloc\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\mcastilloc\\source\\repos\\SAT-E\\Service\\obj\\",
+        "projectPath": "C:\\Users\\mike2c\\Source\\Repos\\SAT-E\\Service\\Service.csproj",
+        "packagesPath": "C:\\Users\\mike2c\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\mike2c\\Source\\Repos\\SAT-E\\Service\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\mcastilloc\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\mike2c\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 19.1.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\DevExpress 19.1\\Components\\System\\Components\\Packages": {},
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
@@ -165,11 +162,11 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\mcastilloc\\source\\repos\\SAT-E\\Core\\Core.csproj": {
-                "projectPath": "C:\\Users\\mcastilloc\\source\\repos\\SAT-E\\Core\\Core.csproj"
+              "C:\\Users\\mike2c\\Source\\Repos\\SAT-E\\Core\\Core.csproj": {
+                "projectPath": "C:\\Users\\mike2c\\Source\\Repos\\SAT-E\\Core\\Core.csproj"
               },
-              "C:\\Users\\mcastilloc\\source\\repos\\SAT-E\\Data\\Data.csproj": {
-                "projectPath": "C:\\Users\\mcastilloc\\source\\repos\\SAT-E\\Data\\Data.csproj"
+              "C:\\Users\\mike2c\\Source\\Repos\\SAT-E\\Data\\Data.csproj": {
+                "projectPath": "C:\\Users\\mike2c\\Source\\Repos\\SAT-E\\Data\\Data.csproj"
               }
             }
           }

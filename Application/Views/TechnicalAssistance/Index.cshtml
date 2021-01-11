@@ -1,0 +1,129 @@
+﻿@model IEnumerable<TechnicalAssistanceViewModel>
+@using Core.Entity
+@using System.Security.Claims;
+
+@{
+    ViewData["Title"] = "Index";
+    string searchString = Context.Request.Query["searchString"];
+    bool assigned = bool.Parse(string.IsNullOrEmpty(Context.Request.Query["assigned"]) ? "false" : Context.Request.Query["assigned"]);
+
+    string allTasksCssClass = (!assigned ? "btn btn-secondary active" : "btn btn-secondary");
+    string AssignedTasksCssClass = (assigned ? "btn btn-secondary active" : "btn btn-secondary");
+
+    var userId = User.Claims.Where(c => c.Type == ClaimTypes.Sid).First().Value;
+}
+<h4>Lista de tareas</h4>
+
+<div class="screen">
+    <div class="screen-header">
+        <form class="ui form" method="get" asp-action="Index">
+            <div class="inline fields">
+                <div class="field">
+                    <a class="ui button small primary" asp-action="Create">
+                        <i class="plus icon"></i>
+                        Nueva Tarea
+                    </a>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="AssignedTo" value="@userId" checked="checked">
+                        <label>Asignadas</label>
+                    </div>
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="AssignedTo" value="0">
+                        <label for="frequency">Todas</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui small input">
+                        <select class="ui fluid dropdown" id="State" name="State" asp-items="Html.GetEnumSelectList<State>()">
+                            <option value="@null">- Todo -</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui small icon input">
+                        <input type="search" id="SearchString" name="SearchString" placeholder="...buscar tarea">
+                        <i class="search icon"></i>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="screen-body">
+        <table class="ui small table striped">
+            <thead>
+                <tr>
+                    <th>
+                        Tarea @*@Html.DisplayNameFor(model => model.TaskName)*@
+                    </th>
+                    <th>
+                        Registro @*@Html.DisplayNameFor(model => model.TaskDate)*@
+                    </th>
+                    <th>
+                        Inicio @*@Html.DisplayNameFor(model => model.StartDate)*@
+                    </th>
+                    <th>
+                        Fin @*@Html.DisplayNameFor(model => model.EndDate)*@
+                    </th>
+                    <th>
+                        Estado @*@Html.DisplayNameFor(model => model.State)*@
+                    </th>
+                    <th>
+                        Prioridad @*@Html.DisplayNameFor(model => model.Priority)*@
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (TechnicalAssistanceViewModel task in Model)
+                {
+                    <tr>
+                        <td>
+                            <a asp-controller="TechnicalAssistance" asp-action="Details" asp-route-id="@task.TaskId">@task.TaskName</a>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => task.TaskDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => task.StartDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => task.EndDate)
+                        </td>
+                        <td>
+                            @{
+                                switch (task.State)
+                                {
+                                    case State.Pendiente:
+                                        <label class="ui green">@Html.DisplayFor(modelItem => task.State)</label>
+                                        break;
+                                    case State.Iniciada:
+                                        <label class="ui blue">@Html.DisplayFor(modelItem => task.State)</label>
+                                        break;
+                                    case State.Finalizada:
+                                        <label class="ui grey">@Html.DisplayFor(modelItem => task.State)</label>
+                                        break;
+                                    case State.Deleted:
+                                        <label class="ui red">@Html.DisplayFor(modelItem => task.State)</label>
+                                        break;
+                                    default:
+                                        <label>@Html.DisplayFor(modelItem => task.State)</label>
+                                        break;
+                                }
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => task.Priority)
+                        </td>
+                        <td>
+                            <a class="btn btn-link delete-link" asp-controller="TechnicalAssistance" asp-action="Delete" asp-route-taskid="@task.TaskId">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

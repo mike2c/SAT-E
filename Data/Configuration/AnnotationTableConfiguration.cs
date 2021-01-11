@@ -1,9 +1,6 @@
 ﻿using Core.Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Data.Configuration
 {
@@ -16,7 +13,6 @@ namespace Data.Configuration
             builder.Property(a => a.AnnotationBody)
                 .IsRequired(true)
                 .HasColumnType("text");
-
         }
     }
 }

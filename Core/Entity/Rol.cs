@@ -15,7 +15,7 @@ namespace Core.Entity
 
     public enum RolId
     {
-        Soporte = 1,
-        Redes = 2
+        SOPORTE_SISTEMAS = 1,
+        COMUNICACION_REDES = 2
     }
 }

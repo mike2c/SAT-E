@@ -13,16 +13,8 @@ namespace Data.Configuration
         {
             builder.ToTable("TechnicalAssistance");
 
-            builder.Property(t => t.Problem)
-                .IsRequired(true)
-                .HasColumnType("text");
-
-            builder.Property(t => t.State)
-                .IsRequired(true)
-                .HasDefaultValue(State.Pendiente);
-
-            builder.Property(t => t.Priority)
-                .IsRequired(true);
+            builder.Property(t => t.ProblemTypeId)
+                .IsRequired(false);
         }
     }
 }

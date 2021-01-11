@@ -2,7 +2,7 @@
 {
     public class TechnicalAssistance : Task
     {
-        public int TechnicalAssistanceId { get; set; }
-        public Solution Solution { get; set; }
+        public int ?ProblemTypeId { get; set; }
+        public ProblemType ProblemType { get; set; }
     }
 }

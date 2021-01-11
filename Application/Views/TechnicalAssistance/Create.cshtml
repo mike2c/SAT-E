@@ -1,0 +1,78 @@
+﻿@using Core.Entity
+@model TechnicalAssistanceViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h4>Nueva tarea</h4>
+
+<div class="container">
+    <div class="screen">
+        <div class="screen-header">
+        </div>
+        <div class="screen-body">
+            <form class="ui form" asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="ten wide field form-group">
+                    <label asp-for="TaskName"></label>
+                    <input asp-for="TaskName" autocomplete="off" />
+                    <span asp-validation-for="TaskName" class="text-danger"></span>
+                </div>
+                <div class="ten wide field">
+                    <label asp-for="SourceId"></label>
+                    <select class="ui dropdown fluid" asp-for="SourceId">
+                        @foreach (var item in ViewBag.Sources)
+                        {
+                            <option value="@item.SourceId">@item.SourceName</option>
+                        }
+                    </select>
+                    <span asp-validation-for="SourceId" class="text-danger"></span>
+                </div>
+                <div class="ten wide field">
+                    <label asp-for="State">Estado</label>
+                    <select class="ui dropdown fluid" asp-for="State" asp-items="Html.GetEnumSelectList<State>()"></select>
+                    <span asp-validation-for="State" class="text-danger"></span>
+                </div>
+                <div class="ten wide field">
+                    <label asp-for="Priority">Prioridad</label>
+                    <select class="ui dropdown fluid" asp-for="Priority" asp-items="Html.GetEnumSelectList<Priority>()"></select>
+                    <span asp-validation-for="Priority" class="text-danger"></span>
+                </div>
+                <div class="ten wide field">
+                    <label asp-for="ProblemTypeId" class="control-label">Tipo de Problema</label>
+                    <select class="ui dropdown search" asp-for="ProblemTypeId">
+
+                        <option value="@null">Sin clasificar</option>
+                        
+                        @foreach (var item in ViewBag.ProblemTypes)
+                        {
+                            <option value="@item.ProblemTypeId">@item.ProblemName</option>
+                        }
+                    </select>
+                    <span asp-validation-for="ProblemTypeId" class="text-danger"></span>
+                </div>
+                <div class="ten wide field">
+                    <label for="AssignedTo" class="control-label">Asignar a</label>
+                    <select class="ui dropdown search" name="AssignedTo" id="AssignedTo">
+                        <option value="@null">Sin asignación</option>
+                        @foreach (var user in ViewBag.Users)
+                        {
+                            <option value="@user.UserId">@user.Username</option>
+                        }
+                    </select>
+                    <span asp-validation-for="ProblemTypeId" class="text-danger"></span>
+                </div>
+
+                <input class="ui button primary" type="submit" value="Guardar" />
+            </form>
+        </div>
+    </div>
+</div>
+<div>
+    <a class="ui button basic primary" asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -13,31 +13,35 @@ namespace Application.Data
         public void Initialize(SATContext context, IEncryptor encryptor)
         {
 
-            if (context.Users.Any())
-                return;
-
-            context.Users.Add (
+            if (!context.Users.Any())
+            {
+                context.Users.Add(
                 new User()
                 {
                     Username = "mcastilloc",
                     Password = encryptor.encrypt("123"),
                     Email = "macastilloc@enacal.com.pri",
-                    Roles = new List<Rol>()
+                    //Rol = new List<Rol>()
+                    //{
+                    //    new Rol()
+                    //    {
+                    //        RolId = RolId.SOPORTE_SISTEMAS,
+                    //        RolName = "Soporte de sistemas"
+                    //    },
+                    //    new Rol()
+                    //    {
+                    //        RolId = RolId.COMUNICACION_REDES,
+                    //        RolName = "Redes y comunicaciones"
+                    //    }
+                    //},
+                    Rol = new Rol()
                     {
-                        new Rol()
-                        {
-                            RolId = RolId.Soporte,
-                            RolName = "Soporte de sistemas"
-                        },
-                        new Rol()
-                        {
-                            RolId = RolId.Redes,
-                            RolName = "Redes y comunicaciones"
-                        }
+                        RolId = RolId.SOPORTE_SISTEMAS,
+                        RolName = "Soporte de sistemas"
                     },
-                    IsActive = true                        
-                }
-            );
+                    IsActive = true
+                });
+            }
 
             context.SaveChanges();
         }

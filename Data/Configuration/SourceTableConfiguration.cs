@@ -20,6 +20,7 @@ namespace Data.Configuration
                 .IsRequired(true)
                 .HasColumnType("VarChar")
                 .HasMaxLength(45);
+
         }
     }
 }

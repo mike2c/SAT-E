@@ -5,7 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Data.Data;
 using Microsoft.EntityFrameworkCore;
-using Service.Auth;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Application.Security;
@@ -37,8 +36,10 @@ namespace Application
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {
-                    options.LoginPath = "/Login/Login";
+                    options.LogoutPath = "/Authenticate/Logout";
+                    options.LoginPath = "/Authenticate/Login";
                     options.Cookie.Name = "SAT.UserData.Cookie";
+                    options.ReturnUrlParameter = "ReturnUrl";
                 });
 
             services.AddAuthorization(options =>
@@ -80,10 +81,15 @@ namespace Application
 
             app.UseEndpoints(endpoints =>
             {
+                //endpoints.MapControllerRoute(
+                //    name: "default",
+                //    pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Authenticate}/{action=Login}/{id?}");
             });
+
+            
         }
     }
 }

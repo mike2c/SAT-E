@@ -2,8 +2,8 @@
 {
     public enum TaskType
     {
-        AsistenciaTecnica,
-        Requerimiento,
-        Ticket
+        AsistenciaTecnica = 1,
+        Requerimiento = 2,
+        Ticket = 3
     }
 }

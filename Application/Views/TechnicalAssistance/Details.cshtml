@@ -1,0 +1,193 @@
+﻿@using Core.Entity
+@using System.Text
+@using System.Text.Json
+
+@model TechnicalAssistanceViewModel
+@{
+    ViewData["Title"] = "Details";
+
+    string titleClasses = "ui small header";
+    string icon = @"<i class='fas fa-play'></i>";
+    string buttonText = "Iniciar Tarea";
+    string action = "ChangeTaskState";
+    State nextState = State.Iniciada;
+
+}
+
+<h4>Detalle de la tarea</h4>
+
+<div class="ui segment">
+    <div class="">
+        <div class="ui top attached tabular menu">
+            <a class="item active" data-tab="first">Tarea</a>
+            <a class="item" data-tab="second">Solución</a>
+            @if (Model.State == State.Iniciada)
+            {
+                <a class="item" data-tab="third">Finalizar Tarea</a>
+            }
+        </div>
+        <div class="ui bottom attached tab segment active" data-tab="first">
+            <div class="container">
+                <div class="row">
+                    <h2 class="ui header medium">
+                        @*<i class="settings icon"></i>*@
+                        <div class="content">
+                            @Html.DisplayFor(model => model.TaskName)
+                            <a href="#" class="sub header">
+                                @if (Model.ProblemTypeId == null)
+                                {
+                                    <p>Sin clasificar</p>
+                                }
+                                else
+                                {
+                                    @ViewBag.ProblemName
+                                }
+                            </a>
+                        </div>
+                    </h2>
+                    <br />
+                </div>
+                <br />
+                <div class="ui two column divided grid">
+                    <div class="stretched row">
+                        <div class="column">
+                            <div class="">
+
+                                <table class="ui basic celled selectable  table">
+                                    <tr>
+                                        <td>
+                                            <div class="">
+                                                <i class="far fa-calendar-alt"></i> @Html.DisplayNameFor(model => model.StartDate)
+                                            </div>
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => model.StartDate)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <i class="far fa-calendar-alt"></i> @Html.DisplayNameFor(model => model.EndDate)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => model.EndDate)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <i class="far fa-clock"></i> @Html.DisplayNameFor(model => model.EstimatedTime)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => model.EstimatedTime)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <i class="far fa-clock"></i> @Html.DisplayNameFor(model => model.ActualTime)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => model.ActualTime)
+                                        </td>
+                                    <tr>
+                                        <td>
+                                            <i class="far fa-question-circle"></i> @Html.DisplayNameFor(model => model.State)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => model.State)
+                                        </td>
+                                    <tr>
+                                        <td>
+                                            <i class="fas fa-exclamation-circle"></i> @Html.DisplayNameFor(model => model.Priority)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => model.Priority)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <i class="fas fa-tasks"></i> @Html.DisplayNameFor(model => model.TaskType)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => model.TaskType)
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="column">
+                            @if (Model.State != State.Finalizada)
+                            {
+                                <form class="ui form confirm" asp-controller="TechnicalAssistance" asp-action="ChangeTaskState" method="post">
+                                    <div class="field">
+                                        <div class="waiting">
+                                            <div class="field">
+                                                <label>Estado de la tarea</label>
+                                                <div class="ui small input">
+                                                    <select id="State" class="ui fluid dropdown" name="State">
+                                                        @*asp-items="Html.GetEnumSelectList<State>()*@
+                                                        @if (Model.State == State.Pendiente)
+                                                        {
+                                                            <option value="2"> Iniciada </option>
+                                                        }
+                                                        <option value="3"> Detenida </option>                                                        
+                                                        <option value="5"> Cancelada </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <input style="display: none;" id="EstimatedValue" type="number" name="EstimatedTime" placeholder="Tiempo estimado">
+                                            <input type="hidden" name="TaskId" value="@Model.TaskId" />
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <input class="fluid ui button primary" type="submit" value="@buttonText" />
+                                    </div>
+                                </form>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <br />
+            </div>
+        </div>
+        <div class="ui bottom attached tab segment" data-tab="second">
+
+            @if (Model.ProblemTypeId == null)
+            {
+                <form asp-action="" asp-controller="">
+                </form>
+            }
+            else
+            {
+                <p>Mostrar la solución</p>
+            }
+
+        </div>
+        <div class="ui bottom attached tab segment" data-tab="third">            
+
+        </div>
+    </div>
+</div>
+<div>
+    <a class="ui button basic green" asp-action="Edit" asp-route-id="@Model.TaskId">Edit</a>
+    <a class="ui button basic yellow" asp-action="Index">Back to List</a>
+</div>
+<script type="text/javascript">
+
+    const task = @Html.Raw(JsonSerializer.Serialize(Model));    
+
+    var result = $("#State").children("option[value=1]").prop("disabled", true);
+
+    if (task.StartDate != null) {
+        var result = $("#State").children("option[value=2]").prop("disabled", true);
+    }    
+
+
+
+    $("#State").change((e) => {
+        if (e.target.value == States.Iniciada) {
+            $("#EstimatedValue").show();
+        } else {
+            $("#EstimatedValue").hide();
+        }
+    });
+</script>

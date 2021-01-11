@@ -26,18 +26,21 @@ namespace Application.Security
         public async System.Threading.Tasks.Task Authenticate(HttpContext httpContext, string username, string password)
         {
 
-            User user = context.Users.Include(u => u.Roles).Where(u => u.Username.Equals(username) && u.Password.Equals(encryptor.encrypt(password))).FirstOrDefault();
+            User user = context.Users.Include(u => u.Rol).Where(u => u.Username.Equals(username) && u.Password.Equals(encryptor.encrypt(password))).FirstOrDefault();
 
             if (user != null)
             {
                 var claims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.UserData, user.Username),
-                    new Claim(ClaimTypes.Name, user.Username),
+                    new Claim(ClaimTypes.Sid, user.UserId.ToString()),
+                    new Claim(ClaimTypes.Surname, user.Username),
+                    new Claim(ClaimTypes.Name, "Miguel Angel Castillo"),
                     new Claim(ClaimTypes.Email, user.Email)
                 };
 
-                user.Roles.ForEach(rol => claims.Add(new Claim(ClaimTypes.Role, rol.RolName)));
+                claims.Add(new Claim(ClaimTypes.Role, user.Rol.RolName));
+
+                //user.Rol.ForEach(rol => claims.Add(new Claim(ClaimTypes.Role, rol.RolName)));
 
                 ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
