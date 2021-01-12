@@ -16,45 +16,36 @@ namespace Application.Controllers
     {
         public TechnicalAssistanceController(SATContext context): base(context) { }
 
-        public override IActionResult Index()
+        public override IActionResult Index(string? Order, string? Search, int PageNumber = 1)
         {
-            string searchString = string.Empty;
-            int assignedToId = 0;
-            int state = 0;
-            
-            if (HttpContext.Request.Query.ContainsKey("SearchString"))
-                searchString = HttpContext.Request.Query.Where(r => r.Key == "SearchString").First().Value;
-            
-            if (HttpContext.Request.Query.ContainsKey("AssignedTo"))
-                assignedToId = Int32.Parse(HttpContext.Request.Query.Where(v => v.Key == "AssignedTo").First().Value);
-            
-            if (HttpContext.Request.Query.ContainsKey("State"))
+
+            ViewBag.CurrentSearch = Search;
+
+            //if (HttpContext.Request.Query.ContainsKey("Index"))
+            //    searchString = HttpContext.Request.Query.Where(r => r.Key == "Index").First().Value;
+
+            //if (HttpContext.Request.Query.ContainsKey("SearchString"))
+            //    searchString = HttpContext.Request.Query.Where(r => r.Key == "SearchString").First().Value;
+
+            //if (HttpContext.Request.Query.ContainsKey("AssignedTo"))
+            //    assignedToId = Int32.Parse(HttpContext.Request.Query.Where(v => v.Key == "AssignedTo").First().Value);
+
+            //if (HttpContext.Request.Query.ContainsKey("State"))
+            //{
+            //    Microsoft.Extensions.Primitives.StringValues value = HttpContext.Request.Query.Where(v => v.Key == "State").First().Value;
+            //    if (!String.IsNullOrEmpty(value))
+            //    {
+            //        state = Int32.Parse(value);
+            //    }
+            //}
+
+            IEnumerable<TechnicalAssistanceViewModel> data;
+            if (!string.IsNullOrEmpty(Search))
             {
-                Microsoft.Extensions.Primitives.StringValues value = HttpContext.Request.Query.Where(v => v.Key == "State").First().Value;
-                if (!String.IsNullOrEmpty(value))
-                {
-                    state = Int32.Parse(value);
-                }
-            }
-
-            DbSet<TechnicalAssistance> dbSet = context.TechnicalAssistance;
-
-            dbSet.Where(t => t.TaskName.Contains(searchString));
-
-            if (!string.IsNullOrEmpty(searchString))
-                dbSet.Where(t => t.TaskName.Contains(searchString));
-
-            if(assignedToId != 0)
-            {
-                User assignedToUser = context.Users.Find(assignedToId);
-                dbSet.Where(t => t.AssignedTo.Equals(assignedToUser));
-            }
-
-            if (state != 0) 
-                dbSet.Where(t => t.State == (State) state);
-
-            IEnumerable<TechnicalAssistanceViewModel> data 
-                    = dbSet
+                data = context.TechnicalAssistance
+                    .Where(t => t.TaskName.Contains(Search))
+                    .Skip((PageNumber - 1) * PAGE_SIZE)
+                    .Take(PAGE_SIZE)
                     .Include(t => t.ProblemType)
                     .Include(t => t.AssignedBy)
                     .Include(t => t.AssignedTo)
@@ -62,6 +53,20 @@ namespace Application.Controllers
                     .OrderByDescending(t => t.TaskDate)
                     .AsEnumerable()
                     .Select(t => TaskToViewModel(t));
+            }
+            else
+            {
+                data = context.TechnicalAssistance
+                    .Skip((PageNumber - 1) * PAGE_SIZE)
+                    .Take(PAGE_SIZE)
+                    .Include(t => t.ProblemType)
+                    .Include(t => t.AssignedBy)
+                    .Include(t => t.AssignedTo)
+                    .Include(t => t.AttendedBy)
+                    .OrderByDescending(t => t.TaskDate)
+                    .AsEnumerable()
+                    .Select(t => TaskToViewModel(t));
+            }
 
             return View(data);
         }

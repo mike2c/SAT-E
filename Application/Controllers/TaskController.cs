@@ -2,6 +2,7 @@
 using Data.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,11 @@ using System.Linq;
 namespace Application.Controllers
 {
     public abstract class TaskController : Controller
-    {
+    {        
+        public static int PAGE_SIZE = 10;
+
+        //protected IMemoryCache cache;
+
         protected SATContext context;
         public TaskController(SATContext context)
         {
@@ -79,7 +84,7 @@ namespace Application.Controllers
             return RedirectToAction("Details");
         }
 
-        public abstract IActionResult Index();
+        public abstract IActionResult Index(string ? Order, string ? Search, int PageNumber = 1);
         public abstract IActionResult Details(int taskId);
     }
 }

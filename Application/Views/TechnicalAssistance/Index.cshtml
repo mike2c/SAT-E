@@ -12,46 +12,29 @@
 
     var userId = User.Claims.Where(c => c.Type == ClaimTypes.Sid).First().Value;
 }
-<h4>Lista de tareas</h4>
+<div class="ui medium header"> Lista de tareas</div>
 
-<div class="screen">
-    <div class="screen-header">
-        <form class="ui form" method="get" asp-action="Index">
-            <div class="inline fields">
-                <div class="field">
-                    <a class="ui button small primary" asp-action="Create">
-                        <i class="plus icon"></i>
-                        Nueva Tarea
-                    </a>
-                </div>
-                <div class="field">
-                    <div class="ui radio checkbox">
-                        <input type="radio" name="AssignedTo" value="@userId" checked="checked">
-                        <label>Asignadas</label>
-                    </div>
-                    <div class="ui radio checkbox">
-                        <input type="radio" name="AssignedTo" value="0">
-                        <label for="frequency">Todas</label>
-                    </div>
-                </div>
-                <div class="field">
-                    <div class="ui small input">
-                        <select class="ui fluid dropdown" id="State" name="State" asp-items="Html.GetEnumSelectList<State>()">
-                            <option value="@null">- Todo -</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="field">
-                    <div class="ui small icon input">
-                        <input type="search" id="SearchString" name="SearchString" placeholder="...buscar tarea">
-                        <i class="search icon"></i>
-                    </div>
-                </div>
+<div class="ui three column grid">
+    <div class="column">
+        <a class="ui button small primary" asp-action="Create">
+            <i class="plus icon"></i> Nueva Tarea
+        </a>
+    </div>
+    <div class="column">
+
+    </div>
+    <div class="column">
+        <form method="get" asp-action="Index" class="ui small search">
+            <div class="ui icon input fluid">
+                <input class="prompt" name="Search" type="text" value="@ViewBag.CurrentSearch" placeholder="buscar tarea...">
+                <i class="search icon"></i>
             </div>
         </form>
     </div>
-    <div class="screen-body">
-        <table class="ui small table striped">
+</div>
+<div class="ui one column grid">
+    <div class="column">
+        <table class="ui striped small table">
             <thead>
                 <tr>
                     <th>
@@ -124,6 +107,21 @@
                     </tr>
                 }
             </tbody>
+            <tfoot class="full-width">
+                <tr>
+                </tr>
+            </tfoot>
         </table>
     </div>
 </div>
+
+@*<select class="ui fluid dropdown" id="State" name="State" asp-items="Html.GetEnumSelectList<State>()">
+    <option value="@null">- Todo -</option>
+</select>
+@foreach (State state in Enum.GetValues(typeof(State)))
+{
+    <label for="State" class="item">
+        <input type="checkbox" name="State" />
+        @state
+    </label>
+}*@
