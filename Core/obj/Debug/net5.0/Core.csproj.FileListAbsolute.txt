@@ -10,15 +10,3 @@ C:\Users\mcastilloc\source\repos\SAT-E\Core\obj\Debug\net5.0\Core.csproj.CoreCom
 C:\Users\mcastilloc\source\repos\SAT-E\Core\obj\Debug\net5.0\Core.dll
 C:\Users\mcastilloc\source\repos\SAT-E\Core\obj\Debug\net5.0\ref\Core.dll
 C:\Users\mcastilloc\source\repos\SAT-E\Core\obj\Debug\net5.0\Core.pdb
-C:\Users\mike2c\Source\Repos\SAT-E\Core\bin\Debug\net5.0\Core.deps.json
-C:\Users\mike2c\Source\Repos\SAT-E\Core\bin\Debug\net5.0\Core.dll
-C:\Users\mike2c\Source\Repos\SAT-E\Core\bin\Debug\net5.0\ref\Core.dll
-C:\Users\mike2c\Source\Repos\SAT-E\Core\bin\Debug\net5.0\Core.pdb
-C:\Users\mike2c\Source\Repos\SAT-E\Core\obj\Debug\net5.0\Core.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\mike2c\Source\Repos\SAT-E\Core\obj\Debug\net5.0\Core.AssemblyInfoInputs.cache
-C:\Users\mike2c\Source\Repos\SAT-E\Core\obj\Debug\net5.0\Core.AssemblyInfo.cs
-C:\Users\mike2c\Source\Repos\SAT-E\Core\obj\Debug\net5.0\Core.csproj.CoreCompileInputs.cache
-C:\Users\mike2c\Source\Repos\SAT-E\Core\obj\Debug\net5.0\Core.dll
-C:\Users\mike2c\Source\Repos\SAT-E\Core\obj\Debug\net5.0\ref\Core.dll
-C:\Users\mike2c\Source\Repos\SAT-E\Core\obj\Debug\net5.0\Core.pdb
-C:\Users\mike2c\Source\Repos\SAT-E\Core\obj\Debug\net5.0\Core.csprojAssemblyReference.cache
