@@ -20,6 +20,11 @@ namespace Data.Data
         public DbSet<Annotation> Annotations { get; set; }
         public DbSet<ProblemType> ProblemTypes { get; set; }
         public DbSet<Rol> Roles { get; set; }
+        public DbSet<Department> Departments { get; set; }
+        public DbSet<Branch> Branches { get; set; }
+        public DbSet<Municipality> Municipalities { get; set; }
+        public DbSet<Province> Provinces { get; set; }
+        public DbSet<Employee> Employees { get; set; }
 
         public SATContext(DbContextOptions options) : base(options)
         {
@@ -37,6 +42,13 @@ namespace Data.Data
             builder.ApplyConfiguration(new AttachmentTableConfiguration());
             builder.ApplyConfiguration(new AnnotationTableConfiguration());
             builder.ApplyConfiguration(new RolTableConfiguration());
+
+            builder.ApplyConfiguration(new ProvinceTableConfiguration());
+            builder.ApplyConfiguration(new MunicipalityTableConfiguration());
+            builder.ApplyConfiguration(new BranchTableConfiguration());
+            builder.ApplyConfiguration(new DepartmentTableConfiguration());
+            builder.ApplyConfiguration(new EmployeeTableConfiguration());
+
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

@@ -10,6 +10,7 @@ namespace Core.Entity
     {
         public int BranchId { get; set; }
         public string BranchName { get; set; }
+
         public Municipality Municipality  { get; set;}
     }
 }

@@ -26,6 +26,8 @@ namespace Data.Configuration
             builder.HasMany(s => s.SolutionHistories)
                 .WithOne(x => x.Solution);
 
+            builder.HasOne(p => p.Source);
+
         }
     }
 }

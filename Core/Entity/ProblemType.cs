@@ -7,6 +7,7 @@ namespace Core.Entity
         public int ProblemTypeId { get; set; }
         public string ProblemName { get; set; }
         public string ProblemDescription { get; set; }
+        public Source Source { get; set; }
         public SolutionHistory CurrentSolution { get; set;}
         public List<SolutionHistory> SolutionHistories { get; set; }
     }

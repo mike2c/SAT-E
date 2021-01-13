@@ -8,24 +8,29 @@ namespace Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Employee",
+                name: "Department",
                 columns: table => new
                 {
-                    EmployeeId = table.Column<int>(type: "int", nullable: false)
+                    DepartmentId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Gender = table.Column<int>(type: "int", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CelPhone = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Branch = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Province = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                    DepartmentName = table.Column<string>(type: "nvarchar(45)", maxLength: 45, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Employee", x => x.EmployeeId);
+                    table.PrimaryKey("PK_Department", x => x.DepartmentId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Province",
+                columns: table => new
+                {
+                    ProvinceId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProvinceName = table.Column<string>(type: "nvarchar(45)", maxLength: 45, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Province", x => x.ProvinceId);
                 });
 
             migrationBuilder.CreateTable(
@@ -47,11 +52,32 @@ namespace Data.Migrations
                     SourceId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     SourceName = table.Column<string>(type: "VarChar(45)", maxLength: 45, nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false, defaultValue: true)
+                    IsActive = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
+                    TaskType = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Source", x => x.SourceId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Municipality",
+                columns: table => new
+                {
+                    MunicipalityId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MunicipalityName = table.Column<string>(type: "nvarchar(45)", maxLength: 45, nullable: false),
+                    ProvinceId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Municipality", x => x.MunicipalityId);
+                    table.ForeignKey(
+                        name: "FK_Municipality_Province_ProvinceId",
+                        column: x => x.ProvinceId,
+                        principalTable: "Province",
+                        principalColumn: "ProvinceId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -63,11 +89,38 @@ namespace Data.Migrations
                     Username = table.Column<string>(type: "VarChar(15)", maxLength: 15, nullable: false),
                     Password = table.Column<string>(type: "VarChar(250)", maxLength: 250, nullable: false),
                     Email = table.Column<string>(type: "VarChar(45)", maxLength: 45, nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false, defaultValue: true)
+                    IsActive = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
+                    RolId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_User", x => x.UserId);
+                    table.ForeignKey(
+                        name: "FK_User_Rol_RolId",
+                        column: x => x.RolId,
+                        principalTable: "Rol",
+                        principalColumn: "RolId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Branch",
+                columns: table => new
+                {
+                    BranchId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BranchName = table.Column<string>(type: "nvarchar(45)", maxLength: 45, nullable: false),
+                    MunicipalityId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Branch", x => x.BranchId);
+                    table.ForeignKey(
+                        name: "FK_Branch_Municipality_MunicipalityId",
+                        column: x => x.MunicipalityId,
+                        principalTable: "Municipality",
+                        principalColumn: "MunicipalityId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -113,23 +166,56 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Employee",
+                columns: table => new
+                {
+                    EmployeeId = table.Column<int>(type: "int", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(45)", maxLength: 45, nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(45)", maxLength: 45, nullable: false),
+                    Gender = table.Column<int>(type: "int", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(45)", maxLength: 45, nullable: true),
+                    Phone = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: true),
+                    PhoneExtension = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: true),
+                    CelPhone = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: true),
+                    BranchId = table.Column<int>(type: "int", nullable: true),
+                    DepartmentId = table.Column<int>(type: "int", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Employee", x => x.EmployeeId);
+                    table.ForeignKey(
+                        name: "FK_Employee_Branch_BranchId",
+                        column: x => x.BranchId,
+                        principalTable: "Branch",
+                        principalColumn: "BranchId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Employee_Department_DepartmentId",
+                        column: x => x.DepartmentId,
+                        principalTable: "Department",
+                        principalColumn: "DepartmentId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Task",
                 columns: table => new
                 {
                     TaskId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TaskName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TaskName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TaskDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     EstimatedTime = table.Column<float>(type: "real", nullable: false),
                     ActualTime = table.Column<float>(type: "real", nullable: false),
                     SourceId = table.Column<int>(type: "int", nullable: true),
                     AttendedByUserId = table.Column<int>(type: "int", nullable: true),
                     AssignedByUserId = table.Column<int>(type: "int", nullable: true),
-                    AssingedToUserId = table.Column<int>(type: "int", nullable: true),
+                    AssignedToUserId = table.Column<int>(type: "int", nullable: true),
                     EmployeeId = table.Column<int>(type: "int", nullable: true),
-                    State = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    State = table.Column<int>(type: "int", nullable: false, defaultValue: 1),
                     Priority = table.Column<int>(type: "int", nullable: false),
                     TaskType = table.Column<int>(type: "int", nullable: false)
                 },
@@ -155,8 +241,8 @@ namespace Data.Migrations
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Task_User_AssingedToUserId",
-                        column: x => x.AssingedToUserId,
+                        name: "FK_Task_User_AssignedToUserId",
+                        column: x => x.AssignedToUserId,
                         principalTable: "User",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Restrict);
@@ -166,30 +252,6 @@ namespace Data.Migrations
                         principalTable: "User",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "UserRoles",
-                columns: table => new
-                {
-                    RolesRolId = table.Column<int>(type: "int", nullable: false),
-                    UsersUserId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserRoles", x => new { x.RolesRolId, x.UsersUserId });
-                    table.ForeignKey(
-                        name: "FK_UserRoles_Rol_RolesRolId",
-                        column: x => x.RolesRolId,
-                        principalTable: "Rol",
-                        principalColumn: "RolId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_UserRoles_User_UsersUserId",
-                        column: x => x.UsersUserId,
-                        principalTable: "User",
-                        principalColumn: "UserId",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -238,7 +300,8 @@ namespace Data.Migrations
                 {
                     ProblemTypeId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ProblemName = table.Column<string>(type: "Varchar(45)", maxLength: 45, nullable: true),
+                    ProblemName = table.Column<string>(type: "Varchar(100)", maxLength: 100, nullable: true),
+                    ProblemDescription = table.Column<string>(type: "TEXT", nullable: false),
                     CurrentSolutionSolutionHistoryId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -257,7 +320,6 @@ namespace Data.Migrations
                 columns: table => new
                 {
                     TaskId = table.Column<int>(type: "int", nullable: false),
-                    TechnicalAssistanceId = table.Column<int>(type: "int", nullable: false),
                     ProblemTypeId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -288,6 +350,26 @@ namespace Data.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Branch_MunicipalityId",
+                table: "Branch",
+                column: "MunicipalityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Employee_BranchId",
+                table: "Employee",
+                column: "BranchId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Employee_DepartmentId",
+                table: "Employee",
+                column: "DepartmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Municipality_ProvinceId",
+                table: "Municipality",
+                column: "ProvinceId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ProblemType_CurrentSolutionSolutionHistoryId",
                 table: "ProblemType",
                 column: "CurrentSolutionSolutionHistoryId");
@@ -313,9 +395,9 @@ namespace Data.Migrations
                 column: "AssignedByUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Task_AssingedToUserId",
+                name: "IX_Task_AssignedToUserId",
                 table: "Task",
-                column: "AssingedToUserId");
+                column: "AssignedToUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Task_AttendedByUserId",
@@ -338,9 +420,9 @@ namespace Data.Migrations
                 column: "ProblemTypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserRoles_UsersUserId",
-                table: "UserRoles",
-                column: "UsersUserId");
+                name: "IX_User_RolId",
+                table: "User",
+                column: "RolId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_SolutionHistoryAttachments_SolutionHistory_SolutionHistoriesSolutionHistoryId",
@@ -379,16 +461,10 @@ namespace Data.Migrations
                 name: "TechnicalAssistance");
 
             migrationBuilder.DropTable(
-                name: "UserRoles");
-
-            migrationBuilder.DropTable(
                 name: "Attachment");
 
             migrationBuilder.DropTable(
                 name: "Task");
-
-            migrationBuilder.DropTable(
-                name: "Rol");
 
             migrationBuilder.DropTable(
                 name: "Employee");
@@ -397,7 +473,22 @@ namespace Data.Migrations
                 name: "Source");
 
             migrationBuilder.DropTable(
+                name: "Branch");
+
+            migrationBuilder.DropTable(
+                name: "Department");
+
+            migrationBuilder.DropTable(
+                name: "Municipality");
+
+            migrationBuilder.DropTable(
+                name: "Province");
+
+            migrationBuilder.DropTable(
                 name: "User");
+
+            migrationBuilder.DropTable(
+                name: "Rol");
 
             migrationBuilder.DropTable(
                 name: "SolutionHistory");

@@ -17,7 +17,7 @@ namespace Data.Migrations
             modelBuilder
                 .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.0");
+                .HasAnnotation("ProductVersion", "5.0.1");
 
             modelBuilder.Entity("AttachmentSolutionHistory", b =>
                 {
@@ -95,7 +95,9 @@ namespace Data.Migrations
                         .UseIdentityColumn();
 
                     b.Property<string>("BranchName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(45)
+                        .HasColumnType("nvarchar(45)");
 
                     b.Property<int?>("MunicipalityId")
                         .HasColumnType("int");
@@ -115,7 +117,9 @@ namespace Data.Migrations
                         .UseIdentityColumn();
 
                     b.Property<string>("DepartmentName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(45)
+                        .HasColumnType("nvarchar(45)");
 
                     b.HasKey("DepartmentId");
 
@@ -125,24 +129,26 @@ namespace Data.Migrations
             modelBuilder.Entity("Core.Entity.Employee", b =>
                 {
                     b.Property<int>("EmployeeId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasColumnType("int");
 
                     b.Property<int?>("BranchId")
                         .HasColumnType("int");
 
                     b.Property<string>("CelPhone")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
 
                     b.Property<int?>("DepartmentId")
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(45)
+                        .HasColumnType("nvarchar(45)");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(45)
+                        .HasColumnType("nvarchar(45)");
 
                     b.Property<int>("Gender")
                         .HasColumnType("int");
@@ -151,13 +157,17 @@ namespace Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(45)
+                        .HasColumnType("nvarchar(45)");
 
                     b.Property<string>("Phone")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
 
                     b.Property<string>("PhoneExtension")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(8)
+                        .HasColumnType("nvarchar(8)");
 
                     b.HasKey("EmployeeId");
 
@@ -175,8 +185,10 @@ namespace Data.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int>("MunicipalityName")
-                        .HasColumnType("int");
+                    b.Property<string>("MunicipalityName")
+                        .IsRequired()
+                        .HasMaxLength(45)
+                        .HasColumnType("nvarchar(45)");
 
                     b.Property<int?>("ProvinceId")
                         .HasColumnType("int");
@@ -206,9 +218,14 @@ namespace Data.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("Varchar(100)");
 
+                    b.Property<int?>("SourceId")
+                        .HasColumnType("int");
+
                     b.HasKey("ProblemTypeId");
 
                     b.HasIndex("CurrentSolutionSolutionHistoryId");
+
+                    b.HasIndex("SourceId");
 
                     b.ToTable("ProblemType");
                 });
@@ -220,8 +237,10 @@ namespace Data.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int>("ProvinceName")
-                        .HasColumnType("int");
+                    b.Property<string>("ProvinceName")
+                        .IsRequired()
+                        .HasMaxLength(45)
+                        .HasColumnType("nvarchar(45)");
 
                     b.HasKey("ProvinceId");
 
@@ -484,7 +503,13 @@ namespace Data.Migrations
                         .WithMany()
                         .HasForeignKey("CurrentSolutionSolutionHistoryId");
 
+                    b.HasOne("Core.Entity.Source", "Source")
+                        .WithMany()
+                        .HasForeignKey("SourceId");
+
                     b.Navigation("CurrentSolution");
+
+                    b.Navigation("Source");
                 });
 
             modelBuilder.Entity("Core.Entity.SolutionHistory", b =>

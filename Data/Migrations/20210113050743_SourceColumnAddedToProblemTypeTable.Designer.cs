@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(SATContext))]
-    [Migration("20201219225635_RolIdColumnRemovedFromSource")]
-    partial class RolIdColumnRemovedFromSource
+    [Migration("20210113050743_SourceColumnAddedToProblemTypeTable")]
+    partial class SourceColumnAddedToProblemTypeTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -19,7 +19,7 @@ namespace Data.Migrations
             modelBuilder
                 .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.0");
+                .HasAnnotation("ProductVersion", "5.0.1");
 
             modelBuilder.Entity("AttachmentSolutionHistory", b =>
                 {
@@ -89,24 +89,68 @@ namespace Data.Migrations
                     b.ToTable("Attachment");
                 });
 
-            modelBuilder.Entity("Core.Entity.Employee", b =>
+            modelBuilder.Entity("Core.Entity.Branch", b =>
                 {
-                    b.Property<int>("EmployeeId")
+                    b.Property<int>("BranchId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<string>("Branch")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("BranchName")
+                        .IsRequired()
+                        .HasMaxLength(45)
+                        .HasColumnType("nvarchar(45)");
+
+                    b.Property<int?>("MunicipalityId")
+                        .HasColumnType("int");
+
+                    b.HasKey("BranchId");
+
+                    b.HasIndex("MunicipalityId");
+
+                    b.ToTable("Branch");
+                });
+
+            modelBuilder.Entity("Core.Entity.Department", b =>
+                {
+                    b.Property<int>("DepartmentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("DepartmentName")
+                        .IsRequired()
+                        .HasMaxLength(45)
+                        .HasColumnType("nvarchar(45)");
+
+                    b.HasKey("DepartmentId");
+
+                    b.ToTable("Department");
+                });
+
+            modelBuilder.Entity("Core.Entity.Employee", b =>
+                {
+                    b.Property<int>("EmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("BranchId")
+                        .HasColumnType("int");
 
                     b.Property<string>("CelPhone")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
+                    b.Property<int?>("DepartmentId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(45)
+                        .HasColumnType("nvarchar(45)");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(45)
+                        .HasColumnType("nvarchar(45)");
 
                     b.Property<int>("Gender")
                         .HasColumnType("int");
@@ -115,17 +159,47 @@ namespace Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(45)
+                        .HasColumnType("nvarchar(45)");
 
                     b.Property<string>("Phone")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
 
-                    b.Property<string>("Province")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("PhoneExtension")
+                        .HasMaxLength(8)
+                        .HasColumnType("nvarchar(8)");
 
                     b.HasKey("EmployeeId");
 
+                    b.HasIndex("BranchId");
+
+                    b.HasIndex("DepartmentId");
+
                     b.ToTable("Employee");
+                });
+
+            modelBuilder.Entity("Core.Entity.Municipality", b =>
+                {
+                    b.Property<int>("MunicipalityId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("MunicipalityName")
+                        .IsRequired()
+                        .HasMaxLength(45)
+                        .HasColumnType("nvarchar(45)");
+
+                    b.Property<int?>("ProvinceId")
+                        .HasColumnType("int");
+
+                    b.HasKey("MunicipalityId");
+
+                    b.HasIndex("ProvinceId");
+
+                    b.ToTable("Municipality");
                 });
 
             modelBuilder.Entity("Core.Entity.ProblemType", b =>
@@ -138,15 +212,41 @@ namespace Data.Migrations
                     b.Property<int?>("CurrentSolutionSolutionHistoryId")
                         .HasColumnType("int");
 
+                    b.Property<string>("ProblemDescription")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("ProblemName")
-                        .HasMaxLength(45)
-                        .HasColumnType("Varchar(45)");
+                        .HasMaxLength(100)
+                        .HasColumnType("Varchar(100)");
+
+                    b.Property<int?>("SourceId")
+                        .HasColumnType("int");
 
                     b.HasKey("ProblemTypeId");
 
                     b.HasIndex("CurrentSolutionSolutionHistoryId");
 
+                    b.HasIndex("SourceId");
+
                     b.ToTable("ProblemType");
+                });
+
+            modelBuilder.Entity("Core.Entity.Province", b =>
+                {
+                    b.Property<int>("ProvinceId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("ProvinceName")
+                        .IsRequired()
+                        .HasMaxLength(45)
+                        .HasColumnType("nvarchar(45)");
+
+                    b.HasKey("ProvinceId");
+
+                    b.ToTable("Province");
                 });
 
             modelBuilder.Entity("Core.Entity.Rol", b =>
@@ -209,6 +309,9 @@ namespace Data.Migrations
                         .HasMaxLength(45)
                         .HasColumnType("VarChar(45)");
 
+                    b.Property<int>("TaskType")
+                        .HasColumnType("int");
+
                     b.HasKey("SourceId");
 
                     b.ToTable("Source");
@@ -227,7 +330,7 @@ namespace Data.Migrations
                     b.Property<int?>("AssignedByUserId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("AssingedToUserId")
+                    b.Property<int?>("AssignedToUserId")
                         .HasColumnType("int");
 
                     b.Property<int?>("AttendedByUserId")
@@ -236,7 +339,7 @@ namespace Data.Migrations
                     b.Property<int?>("EmployeeId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("EndDate")
+                    b.Property<DateTime?>("EndDate")
                         .HasColumnType("datetime2");
 
                     b.Property<float>("EstimatedTime")
@@ -248,18 +351,19 @@ namespace Data.Migrations
                     b.Property<int?>("SourceId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("StartDate")
+                    b.Property<DateTime?>("StartDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("State")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasDefaultValue(0);
+                        .HasDefaultValue(1);
 
                     b.Property<DateTime>("TaskDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("TaskName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("TaskType")
@@ -269,7 +373,7 @@ namespace Data.Migrations
 
                     b.HasIndex("AssignedByUserId");
 
-                    b.HasIndex("AssingedToUserId");
+                    b.HasIndex("AssignedToUserId");
 
                     b.HasIndex("AttendedByUserId");
 
@@ -302,6 +406,9 @@ namespace Data.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("VarChar(250)");
 
+                    b.Property<int?>("RolId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasMaxLength(15)
@@ -309,22 +416,9 @@ namespace Data.Migrations
 
                     b.HasKey("UserId");
 
+                    b.HasIndex("RolId");
+
                     b.ToTable("User");
-                });
-
-            modelBuilder.Entity("RolUser", b =>
-                {
-                    b.Property<int>("RolesRolId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UsersUserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("RolesRolId", "UsersUserId");
-
-                    b.HasIndex("UsersUserId");
-
-                    b.ToTable("UserRoles");
                 });
 
             modelBuilder.Entity("Core.Entity.TechnicalAssistance", b =>
@@ -332,9 +426,6 @@ namespace Data.Migrations
                     b.HasBaseType("Core.Entity.Task");
 
                     b.Property<int?>("ProblemTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TechnicalAssistanceId")
                         .HasColumnType("int");
 
                     b.HasIndex("ProblemTypeId");
@@ -375,13 +466,52 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Core.Entity.Branch", b =>
+                {
+                    b.HasOne("Core.Entity.Municipality", "Municipality")
+                        .WithMany("Branches")
+                        .HasForeignKey("MunicipalityId");
+
+                    b.Navigation("Municipality");
+                });
+
+            modelBuilder.Entity("Core.Entity.Employee", b =>
+                {
+                    b.HasOne("Core.Entity.Branch", "Branch")
+                        .WithMany()
+                        .HasForeignKey("BranchId");
+
+                    b.HasOne("Core.Entity.Department", "Department")
+                        .WithMany()
+                        .HasForeignKey("DepartmentId");
+
+                    b.Navigation("Branch");
+
+                    b.Navigation("Department");
+                });
+
+            modelBuilder.Entity("Core.Entity.Municipality", b =>
+                {
+                    b.HasOne("Core.Entity.Province", "Province")
+                        .WithMany("Municipalities")
+                        .HasForeignKey("ProvinceId");
+
+                    b.Navigation("Province");
+                });
+
             modelBuilder.Entity("Core.Entity.ProblemType", b =>
                 {
                     b.HasOne("Core.Entity.SolutionHistory", "CurrentSolution")
                         .WithMany()
                         .HasForeignKey("CurrentSolutionSolutionHistoryId");
 
+                    b.HasOne("Core.Entity.Source", "Source")
+                        .WithMany()
+                        .HasForeignKey("SourceId");
+
                     b.Navigation("CurrentSolution");
+
+                    b.Navigation("Source");
                 });
 
             modelBuilder.Entity("Core.Entity.SolutionHistory", b =>
@@ -405,16 +535,16 @@ namespace Data.Migrations
                         .WithMany()
                         .HasForeignKey("AssignedByUserId");
 
-                    b.HasOne("Core.Entity.User", "AssingedTo")
+                    b.HasOne("Core.Entity.User", "AssignedTo")
                         .WithMany()
-                        .HasForeignKey("AssingedToUserId");
+                        .HasForeignKey("AssignedToUserId");
 
                     b.HasOne("Core.Entity.User", "AttendedBy")
                         .WithMany()
                         .HasForeignKey("AttendedByUserId");
 
                     b.HasOne("Core.Entity.Employee", "Employee")
-                        .WithMany()
+                        .WithMany("Tasks")
                         .HasForeignKey("EmployeeId");
 
                     b.HasOne("Core.Entity.Source", "Source")
@@ -423,7 +553,7 @@ namespace Data.Migrations
 
                     b.Navigation("AssignedBy");
 
-                    b.Navigation("AssingedTo");
+                    b.Navigation("AssignedTo");
 
                     b.Navigation("AttendedBy");
 
@@ -432,19 +562,13 @@ namespace Data.Migrations
                     b.Navigation("Source");
                 });
 
-            modelBuilder.Entity("RolUser", b =>
+            modelBuilder.Entity("Core.Entity.User", b =>
                 {
-                    b.HasOne("Core.Entity.Rol", null)
-                        .WithMany()
-                        .HasForeignKey("RolesRolId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("Core.Entity.Rol", "Rol")
+                        .WithMany("Users")
+                        .HasForeignKey("RolId");
 
-                    b.HasOne("Core.Entity.User", null)
-                        .WithMany()
-                        .HasForeignKey("UsersUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Rol");
                 });
 
             modelBuilder.Entity("Core.Entity.TechnicalAssistance", b =>
@@ -462,9 +586,29 @@ namespace Data.Migrations
                     b.Navigation("ProblemType");
                 });
 
+            modelBuilder.Entity("Core.Entity.Employee", b =>
+                {
+                    b.Navigation("Tasks");
+                });
+
+            modelBuilder.Entity("Core.Entity.Municipality", b =>
+                {
+                    b.Navigation("Branches");
+                });
+
             modelBuilder.Entity("Core.Entity.ProblemType", b =>
                 {
                     b.Navigation("SolutionHistories");
+                });
+
+            modelBuilder.Entity("Core.Entity.Province", b =>
+                {
+                    b.Navigation("Municipalities");
+                });
+
+            modelBuilder.Entity("Core.Entity.Rol", b =>
+                {
+                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }

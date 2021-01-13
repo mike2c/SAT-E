@@ -21,11 +21,8 @@ namespace Data.Configuration
                 .HasMaxLength(45)
                 .IsRequired(true);
 
-            builder.Property(m => m.Province)
-                .IsRequired(true);
-
-            builder.HasOne(m => m.Province)
-                .WithMany(p => p.Municipalities);
+            builder.HasMany(p => p.Branches)
+                .WithOne(m => m.Municipality);
         }
     }
 }

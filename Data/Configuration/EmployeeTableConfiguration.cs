@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Data.Configuration
 {
-    class EmployeeTableConfiguration : IEntityTypeConfiguration<Employee>
+    public class EmployeeTableConfiguration : IEntityTypeConfiguration<Employee>
     {
         public void Configure(EntityTypeBuilder<Employee> builder)
         {
@@ -47,11 +47,8 @@ namespace Data.Configuration
                 .HasMaxLength(15)
                 .IsRequired(false);
 
-            builder.Property(e => e.Department)
-                .IsRequired(true);
-
-            builder.Property(e => e.Branch)
-                .IsRequired(true);
+            //builder.Property(e => e.IsActive)                
+            //    .IsRequired(false);
 
             builder.HasOne(e => e.Branch);
             builder.HasOne(e => e.Department);
